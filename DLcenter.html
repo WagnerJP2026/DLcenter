@@ -1,0 +1,2875 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ダウンロードセンター</title>
+  <style>
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      background: #ffffff;
+      min-height: 100%;
+      color: #000000;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* ===== ヘッダー ===== */
+    header {
+      background: #000000;
+      padding: 24px 0;
+      margin-bottom: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-btn {
+      padding: 12px 24px;
+      background: #FFCB00;
+      color: #000000;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 203, 0, 0.3);
+      cursor: pointer;
+      border: 2px solid #000000;
+      font-size: 14px;
+    }
+
+    .header-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 203, 0, 0.5);
+      background: #000000;
+      color: #FFCB00;
+    }
+
+    /* ===== タイトル ===== */
+    h1 {
+      margin: 32px 0 0 0;
+      font-size: 36px;
+      color: #000000;
+      font-weight: 700;
+      max-width: 1400px;
+      margin: 32px auto 32px auto;
+      padding: 0 20px;
+    }
+
+    /* ===== 検索セクション ===== */
+    .search-section {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 40px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid #000000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .search-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: #FFCB00;
+    }
+
+    .search-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .search-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #000000;
+      font-weight: 700;
+      border-bottom: 3px solid #FFCB00;
+      padding-bottom: 12px;
+    }
+
+    .catalog-btn {
+      padding: 12px 24px;
+      background: #FFCB00;
+      color: #000000;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255, 203, 0, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid #000000;
+    }
+
+    .catalog-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 203, 0, 0.5);
+      background: #000000;
+      color: #FFCB00;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #000000;
+      font-size: 14px;
+    }
+
+    select,
+    input[type="text"] {
+      padding: 12px 16px;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+      background: #ffffff;
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #FFCB00;
+      box-shadow: 0 0 0 3px rgba(255, 203, 0, 0.2);
+    }
+
+    /* ===== ボタンスタイル ===== */
+    .search-btn {
+      background: #FFCB00;
+      color: #000000;
+      padding: 18px 48px;
+      border: 2px solid #000000;
+      border-radius: 16px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .search-btn:hover {
+      background: #000000;
+      color: #FFCB00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== 検索結果情報 ===== */
+    .results-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 24px 0;
+      padding: 16px 24px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      border: 2px solid #000000;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .results-count {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000000;
+    }
+
+    .results-count span {
+      color: #FFCB00;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* ===== ページネーション ===== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 32px 0;
+      flex-wrap: wrap;
+    }
+
+    .pagination-btn {
+      padding: 10px 16px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #000000;
+      min-width: 44px;
+      text-align: center;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      background: #FFCB00;
+      border-color: #000000;
+      color: #000000;
+      transform: translateY(-2px);
+    }
+
+    .pagination-btn.active {
+      background: #FFCB00;
+      border-color: #000000;
+      color: #000000;
+      font-weight: 700;
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* ===== 製品グリッド（横3列固定） ===== */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid #000000;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: #FFCB00;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card:hover::before {
+      opacity: 1;
+    }
+
+    .discontinued-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #000000;
+      color: #FFCB00;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 10;
+    }
+
+    /* ===== 製品画像 ===== */
+    .product-image-container {
+      width: 100%;
+      height: 240px;
+      background: #ffffff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+      border: 2px solid #000000;
+    }
+
+    .product-image-container:hover {
+      border-color: #FFCB00;
+    }
+
+    .product-image {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .discontinued-image {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      background: #f5f5f5;
+      width: 100%;
+      height: 100%;
+    }
+
+    .discontinued-image-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    .discontinued-image-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #000000;
+    }
+
+    .image-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      color: #FFCB00;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+    }
+
+    .product-image-container:hover .image-nav-btn {
+      opacity: 1;
+    }
+
+    .image-nav-btn:hover {
+      background: #000000;
+      color: #FFCB00;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .image-nav-btn.prev {
+      left: 10px;
+    }
+
+    .image-nav-btn.next {
+      right: 10px;
+    }
+
+    .image-indicator {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .indicator-dot.active {
+      background: #FFCB00;
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ===== 製品情報 ===== */
+    .product-info {
+      margin-bottom: 16px;
+    }
+
+    .product-model {
+      font-size: 18px;
+      font-weight: 700;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+
+    .product-name {
+      font-size: 14px;
+      color: #666666;
+      margin-bottom: 8px;
+    }
+
+    .product-category {
+      display: inline-block;
+      background: #FFCB00;
+      color: #000000;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== 製品リンク ===== */
+    .product-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .product-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #000000;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .product-link:hover {
+      background: #FFCB00;
+      color: #000000;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-link.disabled {
+      background: #f5f5f5;
+      color: #999999;
+      cursor: not-allowed;
+      border-color: #cccccc;
+    }
+
+    .product-link.disabled:hover {
+      transform: none;
+      box-shadow: none;
+      background: #f5f5f5;
+    }
+
+    /* ===== 製品詳細ボタン ===== */
+    .product-detail-btn {
+      display: block;
+      width: 100%;
+      padding: 16px 24px;
+      background: #FFCB00;
+      color: #000000;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 2px solid #000000;
+      cursor: pointer;
+    }
+
+    .product-detail-btn:hover {
+      background: #000000;
+      color: #FFCB00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== 検索結果なし ===== */
+    .no-results {
+      text-align: center;
+      padding: 60px 20px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      border: 2px solid #000000;
+      grid-column: 1 / -1;
+    }
+
+    .no-results h2 {
+      color: #000000;
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .no-results p {
+      color: #666666;
+      font-size: 16px;
+    }
+
+    /* ===== FAQ セクション ===== */
+    .faq-section {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 48px 40px;
+      margin: 48px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid #000000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .faq-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: #FFCB00;
+    }
+
+    .faq-section h2 {
+      font-size: 32px;
+      color: #000000;
+      margin: 0 0 32px 0;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* ===== FAQカテゴリースタイル ===== */
+    .faq-category {
+      margin-bottom: 20px;
+      border: 2px solid #000000;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-category:hover {
+      border-color: #FFCB00;
+    }
+
+    .faq-category-header {
+      background: #000000;
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .faq-category-header:hover {
+      background: #333333;
+    }
+
+    .faq-category-title {
+      color: #FFCB00;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .faq-category-icon {
+      color: #FFCB00;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-category.active .faq-category-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-category-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+      background: #ffffff;
+    }
+
+    .faq-category.active .faq-category-content {
+      max-height: 2000px;
+    }
+
+    .faq-category .faq-item {
+      margin: 16px;
+      border: 1px solid #000000;
+    }
+
+    .faq-category .faq-item:last-child {
+      margin-bottom: 16px;
+    }
+
+    .faq-item {
+      margin-bottom: 16px;
+      border: 2px solid #000000;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .faq-item:hover {
+      border-color: #FFCB00;
+    }
+
+    .faq-question {
+      background: #ffffff;
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 16px;
+      color: #000000;
+      transition: all 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: #FFCB00;
+      color: #000000;
+    }
+
+    .faq-question::before {
+      content: 'Q';
+      background: #000000;
+      color: #FFCB00;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .faq-icon {
+      font-size: 24px;
+      transition: transform 0.3s ease;
+      color: #000000;
+      flex-shrink: 0;
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: #ffffff;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+    }
+
+    .faq-answer-content {
+      padding: 24px;
+      color: #000000;
+      line-height: 1.8;
+      border-top: 1px solid #000000;
+    }
+
+    .faq-answer-content::before {
+      content: 'A';
+      background: #FFCB00;
+      color: #000000;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      font-weight: 700;
+      float: left;
+    }
+
+    /* ===== お問い合わせセクション ===== */
+    .contact-section {
+      background: #000000;
+      border-radius: 24px;
+      padding: 48px 40px;
+      margin: 48px 0;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-section h2 {
+      font-size: 32px;
+      margin: 0 0 16px 0;
+      text-align: center;
+      font-weight: 700;
+      color: #FFCB00;
+    }
+
+    .contact-subtitle {
+      text-align: center;
+      font-size: 16px;
+      margin: 0 0 40px 0;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .contact-card {
+      background: #ffffff;
+      border: 2px solid #FFCB00;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      color: #000000;
+    }
+
+    .contact-card:hover {
+      background: #FFCB00;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(255, 203, 0, 0.3);
+    }
+
+    .contact-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .contact-card h3 {
+      font-size: 24px;
+      margin: 0 0 16px 0;
+      font-weight: 700;
+      color: #000000;
+    }
+
+    .contact-info {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 16px 0;
+      color: #000000;
+    }
+
+    .contact-hours {
+      font-size: 14px;
+      margin: 8px 0 0 0;
+      line-height: 1.6;
+      color: #000000;
+    }
+
+    /* ===== チャットボット ===== */
+    .chatbot-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+    }
+
+    .chatbot-button {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #FFCB00;
+      border: 3px solid #000000;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .chatbot-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .chatbot-button.active {
+      background: #000000;
+      color: #FFCB00;
+    }
+
+    .chatbot-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #FFCB00;
+      opacity: 0.6;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+
+    .chatbot-window {
+      position: absolute;
+      bottom: 90px;
+      right: 0;
+      width: 450px;
+      height: 600px;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      border: 3px solid #000000;
+    }
+
+    .chatbot-window.active {
+      display: flex;
+    }
+
+    .chatbot-header {
+      background: #000000;
+      color: #FFCB00;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chatbot-header-icon {
+      font-size: 36px;
+    }
+
+    .chatbot-header-text h4 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      color: #FFCB00;
+    }
+
+    .chatbot-header-text p {
+      margin: 4px 0 0 0;
+      font-size: 13px;
+      color: #ffffff;
+    }
+
+    .chatbot-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #ffffff;
+    }
+
+    .chatbot-message {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chatbot-message.bot {
+      flex-direction: row;
+    }
+
+    .chatbot-message.user {
+      flex-direction: row-reverse;
+    }
+
+    .chatbot-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .chatbot-message.bot .chatbot-avatar {
+      background: #000000;
+      color: #FFCB00;
+    }
+
+    .chatbot-message.user .chatbot-avatar {
+      background: #FFCB00;
+      color: #000000;
+    }
+
+    .chatbot-bubble {
+      max-width: 70%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .chatbot-message.bot .chatbot-bubble {
+      background: #f5f5f5;
+      color: #000000;
+      border-bottom-left-radius: 4px;
+      border: 1px solid #000000;
+    }
+
+    .chatbot-message.user .chatbot-bubble {
+      background: #000000;
+      color: #FFCB00;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chatbot-quick-replies {
+      padding: 16px 20px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: #ffffff;
+      border-top: 2px solid #000000;
+    }
+
+    .quick-reply-btn {
+      padding: 10px 18px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #000000;
+      font-weight: 600;
+    }
+
+    .quick-reply-btn:hover {
+      background: #FFCB00;
+      color: #000000;
+    }
+
+    .chatbot-input-container {
+      padding: 20px;
+      background: #ffffff;
+      border-top: 2px solid #000000;
+      display: flex;
+      gap: 12px;
+    }
+
+    .chatbot-input {
+      flex: 1;
+      padding: 14px 18px;
+      border: 2px solid #000000;
+      border-radius: 24px;
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .chatbot-input:focus {
+      border-color: #FFCB00;
+    }
+
+    .chatbot-send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #FFCB00;
+      border: 2px solid #000000;
+      color: #000000;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-send-btn:hover {
+      background: #000000;
+      color: #FFCB00;
+      transform: scale(1.1);
+    }
+
+    /* ===== トップへ戻るボタン ===== */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 110px;
+      right: 24px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #000000;
+      border: 3px solid #FFCB00;
+      color: #FFCB00;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 998;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .scroll-to-top:hover {
+      background: #FFCB00;
+      color: #000000;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ===== フッター ===== */
+    footer {
+      background: #000000;
+      color: #ffffff;
+      padding: 48px 20px 24px 20px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #333333;
+      margin-bottom: 24px;
+    }
+
+    .footer-company {
+      line-height: 1.8;
+    }
+
+    .footer-company h3 {
+      color: #FFCB00;
+      font-size: 20px;
+      margin: 0 0 16px 0;
+      font-weight: 700;
+    }
+
+    .footer-company p {
+      margin: 4px 0;
+      font-size: 15px;
+      color: #ffffff;
+    }
+
+    .footer-section h4 {
+      color: #FFCB00;
+      font-size: 18px;
+      margin: 0 0 16px 0;
+      font-weight: 700;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-link:hover {
+      color: #FFCB00;
+      transform: translateX(4px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      color: #999999;
+      font-size: 14px;
+    }
+
+    /* ===== モーダル ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      position: relative;
+      border: 3px solid #000000;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #000000;
+      color: #FFCB00;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: #FFCB00;
+      color: #000000;
+      transform: rotate(90deg);
+    }
+
+    /* ===== 製品詳細モーダル ===== */
+    .product-detail-modal .modal-content {
+      max-width: 1000px;
+    }
+
+    .detail-header {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #000000;
+    }
+
+    .detail-image-container {
+      flex-shrink: 0;
+      width: 300px;
+      height: 300px;
+      background: #ffffff;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      border: 2px solid #000000;
+    }
+
+    .detail-image-container img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .detail-image-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.8);
+      color: #FFCB00;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .detail-image-nav:hover {
+      background: #000000;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .detail-image-nav.prev {
+      left: 10px;
+    }
+
+    .detail-image-nav.next {
+      right: 10px;
+    }
+
+    .detail-info {
+      flex: 1;
+    }
+
+    .detail-info h2 {
+      color: #000000;
+      margin: 0 0 8px 0;
+      font-size: 28px;
+    }
+
+    .detail-info h3 {
+      color: #666666;
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .detail-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .detail-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .badge-category {
+      background: #FFCB00;
+      color: #000000;
+    }
+
+    .badge-discontinued {
+      background: #000000;
+      color: #FFCB00;
+    }
+
+    .detail-keywords {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .keyword-tag {
+      background: #f5f5f5;
+      color: #000000;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      border: 1px solid #000000;
+    }
+
+    .detail-section {
+      margin-bottom: 32px;
+    }
+
+    .detail-section h4 {
+      color: #000000;
+      font-size: 20px;
+      margin: 0 0 16px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #FFCB00;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .spec-item {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 8px;
+      border: 2px solid #000000;
+    }
+
+    .spec-label {
+      font-weight: 600;
+      color: #000000;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .spec-value {
+      color: #000000;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .detail-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .detail-action-btn {
+      padding: 12px 20px;
+      border: 2px solid #000000;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    .detail-action-btn:hover {
+      background: #FFCB00;
+      transform: translateY(-2px);
+    }
+
+    /* ===== サービスショップマップモーダル ===== */
+    .map-modal .modal-content {
+      max-width: 1200px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .map-header {
+      background: #000000;
+      color: #FFCB00;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .map-header h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .map-container {
+      height: 600px;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-japan {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f5;
+      position: relative;
+    }
+
+    .map-marker {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #FFCB00;
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #000000;
+    }
+
+    .map-marker::before {
+      content: '🔧';
+      transform: rotate(45deg);
+      font-size: 18px;
+    }
+
+    .map-marker:hover {
+      transform: rotate(-45deg) scale(1.2);
+      z-index: 10;
+    }
+
+    .map-info-panel {
+      padding: 24px 32px;
+      background: #ffffff;
+      max-height: 200px;
+      overflow-y: auto;
+      border-top: 2px solid #000000;
+    }
+
+    .shop-info {
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+
+    .shop-info.active {
+      display: block;
+    }
+
+    .shop-info h3 {
+      color: #000000;
+      margin: 0 0 12px 0;
+      font-size: 20px;
+    }
+
+    .shop-info p {
+      margin: 6px 0;
+      color: #000000;
+      font-size: 14px;
+    }
+
+    /* ===== レスポンシブデザイン ===== */
+    @media (max-width: 1200px) {
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 12px;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin: 20px auto 24px auto;
+        padding: 0 12px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+
+      .search-section,
+      .faq-section,
+      .contact-section {
+        padding: 24px 16px;
+        margin-bottom: 24px;
+      }
+
+      .search-header h2,
+      .faq-section h2,
+      .contact-section h2 {
+        font-size: 20px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pagination {
+        gap: 4px;
+      }
+
+      .pagination-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+        min-width: 36px;
+      }
+
+      .detail-header {
+        flex-direction: column;
+      }
+
+      .detail-image-container {
+        width: 100%;
+        height: 250px;
+      }
+
+      .chatbot-window {
+        width: 100%;
+        max-width: calc(100vw - 32px);
+        right: 16px;
+        left: 16px;
+      }
+
+      .chatbot-container {
+        right: 16px;
+        bottom: 16px;
+      }
+
+      .scroll-to-top {
+        right: 16px;
+        bottom: 100px;
+      }
+    }
+  </style>
+  <style>
+    @view-transition {
+      navigation: auto;
+    }
+  </style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+</head>
+
+<body>
+  <header>
+    <div class="header-content"><a href="#" class="logo">
+        <svg width="180" height="50" viewbox="0 0 180 50" xmlns="http://www.w3.org/2000/svg"><text x="10" y="35"
+            font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#FFCB00">
+            WAGNER
+          </text>
+        </svg></a> <a href="https://www.wagner-group.com/jp/" target="_blank" rel="noopener noreferrer" class="header-btn"
+        id="newProductsLabel">日本ワグナースプレーテック株式会社Webサイトのトップページへ</a>
+    </div>
+  </header>
+  <h1 id="pageTitle">日本ワグナーダウンロードセンター</h1>
+  <div class="container">
+    <div class="search-section">
+      <div class="search-header">
+        <h2>絞り込み検索</h2><a href="http://127.0.0.1:5500/index.html" target="_blank" rel="noopener noreferrer"
+          class="catalog-btn"> 総合カタログ </a>
+      </div>
+      <form id="searchForm">
+        <div class="search-grid">
+          <div class="form-group"><label for="category" id="categoryLabel">カテゴリー（複数選択可）</label>
+            <div
+              style="display: flex; flex-wrap: wrap; gap: 12px; padding: 12px; border: 2px solid #000000; border-radius: 8px; background: #ffffff;">
+              <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="総合カタログ"
+                  style="width: 16px; height: 16px; cursor: pointer;"> 総合カタログ </label> <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="建築用塗装機器"
+                  style="width: 16px; height: 16px; cursor: pointer;"> 建築用塗装機器 </label> <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="工業用液体塗装機器"
+                  style="width: 16px; height: 16px; cursor: pointer;"> 工業用液体塗装機器 </label> <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="工業用粉体塗装機器"
+                  style="width: 16px; height: 16px; cursor: pointer;"> 工業用粉体塗装機器 </label> <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="高圧洗浄機"
+                  style="width: 16px; height: 16px; cursor: pointer;"> 高圧洗浄機 </label> <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="DIY製品"
+                  style="width: 16px; height: 16px; cursor: pointer;"> DIY製品 </label> <label
+                style="display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; color: #000000;">
+                <input type="checkbox" class="category-checkbox" value="廃番製品"
+                  style="width: 16px; height: 16px; cursor: pointer;"> 廃番製品 </label>
+            </div>
+          </div>
+          <div class="form-group"><label for="keyword" id="keywordLabel">キーワード</label> <input type="text" id="keyword"
+              placeholder="製品名、キーワードで検索" style="width: 100%;">
+          </div>
+        </div>
+        <div style="text-align: center;"><button type="submit" class="search-btn" id="searchBtn"
+            style="min-width: 200px;">検索</button>
+        </div>
+      </form>
+    </div>
+    <div class="results-info">
+      <div class="results-count">
+        検索結果: <span id="totalCount">0</span> 件
+      </div>
+      <div class="results-count"><span id="currentPage">1</span> / <span id="totalPages">1</span> ページ
+      </div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+    <div class="pagination" id="pagination"></div><!-- FAQ セクション -->
+    <div class="faq-section">
+  
+      
+      <h2>
+        <a href="https://wagnerjp2026.github.io/" target="_blank">
+          よくある質問（FAQ）はこちらへ
+        </a>
+      </h2>
+
+    </div>
+      <!-- お問い合わせセクション -->
+    <div class="contact-section">
+      <h2>Contact</h2>
+      <p class="contact-subtitle">製品に関するご質問や業務課題など、ささいなご相談でもお気軽に<br>
+        お問い合わせください。</p>
+      <div class="contact-grid">
+        <div class="contact-card" onclick="window.open('https://share-eu1.hsforms.com/1Bs0Gzg9HQa2dRo7MCrbL1Qfvb1e', '_blank')">
+          <div class="contact-icon">
+            ✉️
+          </div>
+          <h3>お問合せフォーム</h3>
+          
+          <div class="contact-hours">
+            24時間送信可能<br>
+            ※返信は営業時間内に順次対応いたします
+          </div>
+        </div>
+        <div class="contact-card" onclick="showServiceShopMap()">
+          <div class="contact-icon">
+            🔧
+          </div>
+          <h3>サービスショップ</h3>
+          <p style="margin-top: 16px; font-size: 16px;">全国のサービスショップで<br>
+            修理・メンテナンスを承ります</p>
+          
+        </div>
+      </div>
+    </div>
+  </div><!-- フッター -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-main">
+        <div class="footer-company">
+          <h3>日本ワグナー・スプレーテック株式会社</h3>
+          <p>〒574-0057</p>
+          <p>大阪府大東市新田西町2-35</p>
+          <p>TEL: 072-874-3561（代表）</p>
+          <p>FAX: 072-874-3426</p>
+        </div>
+        <div class="footer-section">
+          <h4>リンク</h4>
+          <div class="footer-links"><a href="https://www.wagner-group.com/jp/" target="_blank" rel="noopener noreferrer"
+              class="footer-link">会社情報</a> <a href="https://www.jp-wagner.com/contact/" target="_blank"
+              rel="noopener noreferrer" class="footer-link">お問い合わせ</a><a href="https://wagnerjp2026.github.io/" target="_blank"
+              rel="noopener noreferrer" class="footer-link">よくある質問</a><a href="https://www.wagner-group.com/jp/%E6%B3%95%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/" target="_blank" rel="noopener noreferrer"
+              class="footer-link">法的通知</a><a href="https://www.wagner-group.com/jp/%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%81%AB%E9%96%A2%E3%81%99%E3%82%8B%E6%96%B9%E9%87%9D/"
+              target="_blank" rel="noopener noreferrer" class="footer-link">プライバシーポリシー</a><a href="https://www.wagner-group.com/jp/%E6%B3%95%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/compliance/" target="_blank"
+              rel="noopener noreferrer" class="footer-link">コンプライアンス</a> <a href="https://www.wagner-group.com/jp/%E6%B3%95%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/%E6%B3%95%E5%BE%8B%E4%B8%8A%E3%81%AE%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85/"
+              target="_blank" rel="noopener noreferrer" class="footer-link">法律上の注意事項</a> 
+          </div>
+          
+        </div>
+       
+      </div>
+      <div class="footer-bottom">
+        © 2026 J. Wagner GmbH - All rights reserved.
+      </div>
+    </div>
+  </footer><!-- トップへ戻るボタン --> <button class="scroll-to-top" onclick="scrollToTop()" title="トップへ戻る"> ▲ </button>
+  <!-- チャットボット -->
+  <div class="chatbot-container">
+    <div class="chatbot-window" id="chatbotWindow">
+      <div class="chatbot-header">
+        <div class="chatbot-header-icon">
+          🤖
+        </div>
+        <div class="chatbot-header-text">
+          <h4>WAGNER アシスタント</h4>
+          <p>お気軽にご質問ください</p>
+        </div>
+      </div>
+      <div class="chatbot-messages" id="chatbotMessages">
+        <div class="chatbot-message bot">
+          <div class="chatbot-avatar">
+            🤖
+          </div>
+          <div class="chatbot-bubble">
+            こんにちは！WAGNERアシスタントです。製品のご質問や資料のダウンロードについて、お気軽にお尋ねください。
+          </div>
+        </div>
+      </div>
+      <div class="chatbot-quick-replies" id="quickReplies"><button class="quick-reply-btn"
+          onclick="sendQuickReply('製品の選び方')">製品の選び方</button> <button class="quick-reply-btn"
+          onclick="sendQuickReply('資料のダウンロード')">資料のダウンロード</button> <button class="quick-reply-btn"
+          onclick="sendQuickReply('メンテナンス')">メンテナンス</button>
+      </div>
+      <div class="chatbot-input-container"><input type="text" class="chatbot-input" id="chatbotInput"
+          placeholder="メッセージを入力..."> <button class="chatbot-send-btn" onclick="sendMessage()">➤</button>
+      </div>
+    </div><button class="chatbot-button" id="chatbotButton" onclick="toggleChatbot()">
+      <div class="chatbot-pulse"></div> 💬
+    </button>
+  </div><!-- 製品詳細モーダル -->
+  <div class="modal product-detail-modal" id="productDetailModal">
+    <div class="modal-content"><button class="modal-close" onclick="closeDetailModal()">×</button>
+      <div id="productDetailContent"></div>
+    </div>
+  </div><!-- サービスショップマップモーダル -->
+  <div class="modal map-modal" id="serviceShopModal">
+    <div class="modal-content">
+      <div class="map-header">
+        <h2>サービスショップ マップ</h2><button class="modal-close" onclick="closeServiceShopModal()"
+          style="position: static; background: #FFCB00; color: #000000; border: 2px solid #000000;">×</button>
+      </div>
+      <div class="map-container">
+        <div class="map-japan" id="mapJapan"><!-- 日本地図のベース -->
+          <svg width="600" height="500" viewbox="0 0 600 500" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));">
+            <path
+              d="M 200 100 L 250 80 L 300 90 L 320 120 L 350 130 L 380 150 L 400 180 L 420 220 L 410 260 L 390 290 L 370 320 L 340 350 L 310 370 L 280 380 L 250 370 L 220 350 L 200 320 L 180 280 L 170 240 L 180 200 L 190 160 L 200 130 Z"
+              fill="#f5f5f5" stroke="#000000" stroke-width="2" />
+          </svg><!-- マーカー配置 -->
+          <div class="map-marker" style="top: 35%; left: 45%;" onclick="showShopInfo('tokyo')" title="東京サービスショップ"></div>
+          <div class="map-marker" style="top: 40%; left: 35%;" onclick="showShopInfo('osaka')" title="大阪サービスショップ"></div>
+          <div class="map-marker" style="top: 25%; left: 55%;" onclick="showShopInfo('sendai')" title="仙台サービスショップ">
+          </div>
+          <div class="map-marker" style="top: 50%; left: 30%;" onclick="showShopInfo('fukuoka')" title="福岡サービスショップ">
+          </div>
+          <div class="map-marker" style="top: 30%; left: 25%;" onclick="showShopInfo('hiroshima')" title="広島サービスショップ">
+          </div>
+        </div>
+      </div>
+      <div class="map-info-panel" id="mapInfoPanel">
+        <div class="shop-info" id="shop-tokyo">
+          <h3>東京サービスショップ</h3>
+          <p>📍 住所: 東京都品川区○○ 1-2-3</p>
+          <p>📞 電話: 03-1234-5678</p>
+          <p>🕐 営業時間: 9:00～17:00（土日祝休）</p>
+        </div>
+        <div class="shop-info" id="shop-osaka">
+          <h3>大阪サービスショップ</h3>
+          <p>📍 住所: 大阪府大東市新田西町2-35</p>
+          <p>📞 電話: 072-874-3561</p>
+          <p>🕐 営業時間: 9:00～17:00（土日祝休）</p>
+        </div>
+        <div class="shop-info" id="shop-sendai">
+          <h3>仙台サービスショップ</h3>
+          <p>📍 住所: 宮城県仙台市○○区 3-4-5</p>
+          <p>📞 電話: 022-1234-5678</p>
+          <p>🕐 営業時間: 9:00～17:00（土日祝休）</p>
+        </div>
+        <div class="shop-info" id="shop-fukuoka">
+          <h3>福岡サービスショップ</h3>
+          <p>📍 住所: 福岡県福岡市○○区 6-7-8</p>
+          <p>📞 電話: 092-1234-5678</p>
+          <p>🕐 営業時間: 9:00～17:00（土日祝休）</p>
+        </div>
+        <div class="shop-info" id="shop-hiroshima">
+          <h3>広島サービスショップ</h3>
+          <p>📍 住所: 広島県広島市○○区 9-10-11</p>
+          <p>📞 電話: 082-1234-5678</p>
+          <p>🕐 営業時間: 9:00～17:00（土日祝休）</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script>
+    // ===== 製品データ（30製品） =====
+    const products = [
+      {
+        id: 1,
+        model: 'SF23 Plus',
+        name: 'エアレス塗装機',
+        category: '建築用塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['エアレス', '塗装', '業務用', 'プロ仕様'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '2.3L/分',
+          '最大圧力': '23MPa',
+          '電源': '単相100V',
+          '重量': '18kg'
+        }
+      },
+      {
+        id: 2,
+        model: 'Control Pro 250 M',
+        name: 'HEA塗装システム',
+        category: '建築用塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['HEA', '高効率', '低圧', '省塗料'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '1.5L/分',
+          '最大圧力': '11MPa',
+          '電源': '単相100V',
+          '重量': '11kg'
+        }
+      },
+      {
+        id: 3,
+        model: 'ProjectPro 119',
+        name: 'プロジェクトプロ',
+        category: '建築用塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['プロ', 'エアレス', '大型', '建築'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '4.5L/分',
+          '最大圧力': '30MPa',
+          '電源': '三相200V',
+          '重量': '45kg'
+        }
+      },
+      {
+        id: 4,
+        model: 'FineCoat 9900',
+        name: '静電塗装機',
+        category: '工業用液体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['静電', '工業用', '自動', '高効率'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '吐出方式': '静電エアスプレー',
+          '最大電圧': '100kV',
+          '用途': '自動車部品、家電'
+        }
+      },
+      {
+        id: 5,
+        model: 'OptiSelect Pro',
+        name: 'カラーチェンジシステム',
+        category: '工業用液体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['カラーチェンジ', '自動', '多色', '工業'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '色数': '最大8色',
+          '切替時間': '30秒以内',
+          '用途': '量産ライン'
+        }
+      },
+      {
+        id: 6,
+        model: 'GM7000',
+        name: '粉体塗装機',
+        category: '工業用粉体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['粉体', '静電', 'エコ', '工業用'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '塗装方式': '静電粉体塗装',
+          '最大電圧': '100kV',
+          '用途': '金属製品'
+        }
+      },
+      {
+        id: 7,
+        model: 'OptiFlex 2C',
+        name: '2液塗装システム',
+        category: '工業用液体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['2液', '高品質', 'プロ', '自動車'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '混合比': '自動調整',
+          '精度': '±2%',
+          '用途': '自動車補修'
+        }
+      },
+      {
+        id: 8,
+        model: 'PowderSprint',
+        name: '粉体スプリントシステム',
+        category: '工業用粉体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['粉体', '高速', '自動', 'ライン'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '塗装速度': '高速対応',
+          '粉体回収率': '98%以上',
+          '用途': '量産ライン'
+        }
+      },
+      {
+        id: 9,
+        model: 'HydroClean 2350',
+        name: '高圧洗浄機プロ',
+        category: '高圧洗浄機',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['高圧', '洗浄', 'プロ', '業務用'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '23MPa',
+          '吐出量': '15L/分',
+          '電源': '単相100V'
+        }
+      },
+      {
+        id: 10,
+        model: 'CleanForce Pro',
+        name: '業務用洗浄機',
+        category: '高圧洗浄機',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['洗浄', '業務', '高圧', '耐久性'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '20MPa',
+          '吐出量': '12L/分',
+          '重量': '25kg'
+        }
+      },
+      {
+        id: 11,
+        model: 'W 400',
+        name: 'ウォールパーフェクト',
+        category: 'DIY製品',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['壁', '簡単', 'DIY', '家庭'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '400ml/分',
+          '使用圧力': '0.35MPa',
+          '重量': '3.5kg'
+        }
+      },
+      {
+        id: 12,
+        model: 'W 590',
+        name: 'フレキシオスプレー',
+        category: 'DIY製品',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['DIY', '多用途', '家庭用', '簡単'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '500ml/分',
+          '用途': '家具、壁面',
+          '重量': '4.2kg'
+        }
+      },
+      {
+        id: 13,
+        model: 'Studio Home',
+        name: 'DIYスプレーシステム',
+        category: 'DIY製品',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['家庭用', 'コンパクト', '簡単', 'DIY'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '350ml/分',
+          '用途': '小物塗装',
+          '重量': '2.8kg'
+        }
+      },
+      {
+        id: 14,
+        model: 'SprayPack 18V',
+        name: 'コードレススプレー',
+        category: 'DIY製品',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['コードレス', 'バッテリー', 'DIY', '便利'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          'バッテリー': '18V',
+          '連続使用': '約60分',
+          '重量': '3.2kg'
+        }
+      },
+      {
+        id: 15,
+        model: 'SF31 Supreme',
+        name: 'プロ仕様エアレス',
+        category: '建築用塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['エアレス', '大型', 'プロ', '建築'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '3.1L/分',
+          '最大圧力': '25MPa',
+          '重量': '22kg'
+        }
+      },
+      {
+        id: 16,
+        model: 'PowerPainter 90',
+        name: 'パワーペインター',
+        category: '建築用塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['建築', '塗装', 'パワフル', '業務用'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '2.0L/分',
+          '最大圧力': '18MPa',
+          '重量': '16kg'
+        }
+      },
+      {
+        id: 17,
+        model: 'RotoFlex S7',
+        name: '回転霧化塗装機',
+        category: '工業用液体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['回転霧化', '工業', '高品質', '自動'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '塗装方式': '回転霧化',
+          '回転数': '最大40,000rpm',
+          '用途': '自動車、家電'
+        }
+      },
+      {
+        id: 18,
+        model: 'UltraCoat 5000',
+        name: '超高圧塗装システム',
+        category: '工業用液体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['超高圧', '工業', '大型', 'ライン'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '50MPa',
+          '吐出量': '8L/分',
+          '用途': '大型製品'
+        }
+      },
+      {
+        id: 19,
+        model: 'MagicCompact 2',
+        name: 'コンパクト粉体塗装',
+        category: '工業用粉体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['粉体', 'コンパクト', '小型', '工業'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          'サイズ': 'コンパクト設計',
+          '用途': '小型製品',
+          '塗着効率': '95%'
+        }
+      },
+      {
+        id: 20,
+        model: 'OptiCenter OC10',
+        name: '粉体カラーチェンジ',
+        category: '工業用粉体塗装機器',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['粉体', 'カラーチェンジ', '自動', '多色'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '色数': '最大10色',
+          '切替時間': '2分以内',
+          '回収率': '99%'
+        }
+      },
+      {
+        id: 21,
+        model: 'WashMaster 1500',
+        name: '家庭用高圧洗浄機',
+        category: '高圧洗浄機',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['家庭用', '洗浄', '高圧', 'コンパクト'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '15MPa',
+          '吐出量': '8L/分',
+          '重量': '8kg'
+        }
+      },
+      {
+        id: 22,
+        model: 'EcoPower 1800',
+        name: 'エコ洗浄機',
+        category: '高圧洗浄機',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['エコ', '省エネ', '洗浄', '家庭'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '18MPa',
+          '消費電力': '1800W',
+          '重量': '12kg'
+        }
+      },
+      {
+        id: 23,
+        model: 'TurboJet Max',
+        name: 'ターボジェット洗浄',
+        category: '高圧洗浄機',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['ターボ', '強力', '洗浄', '高圧'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '22MPa',
+          '吐出量': '14L/分',
+          '重量': '18kg'
+        }
+      },
+      {
+        id: 24,
+        model: 'W 950',
+        name: 'プロフェッショナルDIY',
+        category: 'DIY製品',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['DIY', '高性能', '家庭用', '多用途'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '600ml/分',
+          '用途': '全般',
+          '重量': '5.5kg'
+        }
+      },
+      {
+        id: 25,
+        model: 'FurniturePro',
+        name: '家具塗装専用機',
+        category: 'DIY製品',
+        images: [
+          'https://cdn.wagner-group.com/fileadmin/_processed_/5/5/csm_2466025_SprayPack-18V-Kit-wo-battery_product-shot_left_hose-storage_whitebackground_b9451595ac.png'
+        ],
+        discontinued: false,
+        keywords: ['家具', 'DIY', '専用', '高品質'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '450ml/分',
+          '用途': '木工家具',
+          '重量': '3.8kg'
+        }
+      },
+      // 廃番製品
+      {
+        id: 26,
+        model: 'W 180 P',
+        name: 'ウォールスプレー（廃番）',
+        category: 'DIY製品',
+        images: [],
+        discontinued: true,
+        keywords: ['壁面', '簡単', 'DIY', '廃番'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '500ml/分',
+          '使用圧力': '0.4MPa',
+          '重量': '3.8kg'
+        }
+      },
+      {
+        id: 27,
+        model: 'W 665',
+        name: 'ウォールパーフェクト（廃番）',
+        category: 'DIY製品',
+        images: [],
+        discontinued: true,
+        keywords: ['壁面', 'ローラー', '廃番', 'DIY'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '350ml/分',
+          '使用圧力': '0.35MPa',
+          '重量': '3.2kg'
+        }
+      },
+      {
+        id: 28,
+        model: 'SF19 Classic',
+        name: 'エアレスクラシック（廃番）',
+        category: '建築用塗装機器',
+        images: [],
+        discontinued: true,
+        keywords: ['エアレス', '旧モデル', '廃番', '建築'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大吐出量': '1.9L/分',
+          '最大圧力': '19MPa',
+          '重量': '15kg'
+        }
+      },
+      {
+        id: 29,
+        model: 'GM5500 Old',
+        name: '旧型粉体塗装機（廃番）',
+        category: '工業用粉体塗装機器',
+        images: [],
+        discontinued: true,
+        keywords: ['粉体', '旧型', '廃番', '工業'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '塗装方式': '静電粉体',
+          '最大電圧': '90kV',
+          '用途': '金属製品'
+        }
+      },
+      {
+        id: 30,
+        model: 'CleanPro 1800',
+        name: '旧型洗浄機（廃番）',
+        category: '高圧洗浄機',
+        images: [],
+        discontinued: true,
+        keywords: ['洗浄', '旧型', '廃番', '高圧'],
+        availableDocuments: ['分解図', '部品価格表', '操作説明書', '製品カタログ'],
+        specs: {
+          '最大圧力': '18MPa',
+          '吐出量': '10L/分',
+          '重量': '15kg'
+        }
+      }
+    ];
+
+    // ===== ページネーション設定 =====
+    const ITEMS_PER_PAGE = 9;
+    let currentPage = 1;
+    let filteredProducts = [];
+
+    // 画像インデックスを管理するオブジェクト
+    const productImageIndices = {};
+
+    // ===== トップへ戻る機能 =====
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // ===== チャットボット機能 =====
+    function toggleChatbot() {
+      const chatbotWindow = document.getElementById('chatbotWindow');
+      const chatbotButton = document.getElementById('chatbotButton');
+
+      if (chatbotWindow.classList.contains('active')) {
+        chatbotWindow.classList.remove('active');
+        chatbotButton.classList.remove('active');
+        chatbotButton.innerHTML = '<div class="chatbot-pulse"></div>💬';
+      } else {
+        chatbotWindow.classList.add('active');
+        chatbotButton.classList.add('active');
+        chatbotButton.innerHTML = '✕';
+      }
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatbotInput');
+      const message = input.value.trim();
+
+      if (message === '') return;
+
+      // ユーザーメッセージを追加
+      addChatMessage(message, 'user');
+      input.value = '';
+
+      // ボットの返信（簡易シミュレーション）
+      setTimeout(() => {
+        const botResponse = getBotResponse(message);
+        addChatMessage(botResponse, 'bot');
+      }, 500);
+    }
+
+    function sendQuickReply(message) {
+      addChatMessage(message, 'user');
+
+      setTimeout(() => {
+        const botResponse = getBotResponse(message);
+        addChatMessage(botResponse, 'bot');
+      }, 500);
+    }
+
+    function addChatMessage(text, sender) {
+      const messagesContainer = document.getElementById('chatbotMessages');
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chatbot-message ${sender}`;
+
+      const avatar = document.createElement('div');
+      avatar.className = 'chatbot-avatar';
+      avatar.textContent = sender === 'bot' ? '🤖' : '👤';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'chatbot-bubble';
+      bubble.textContent = text;
+
+      messageDiv.appendChild(avatar);
+      messageDiv.appendChild(bubble);
+      messagesContainer.appendChild(messageDiv);
+
+      // スクロールを一番下へ
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function getBotResponse(message) {
+      const lowerMessage = message.toLowerCase();
+
+      if (lowerMessage.includes('製品') || lowerMessage.includes('選び方')) {
+        return '製品選びについてですね。用途や使用環境に応じて最適な製品をご提案いたします。カスタマーサービス（0120-56-1456）にお電話いただくか、製品カタログをご覧ください。';
+      } else if (lowerMessage.includes('資料') || lowerMessage.includes('ダウンロード') || lowerMessage.includes('カタログ')) {
+        return '資料のダウンロードについてですね。各製品カードから分解図、部品価格表、操作説明書、製品カタログをダウンロードいただけます。ページ上部の検索機能で製品を検索してください。';
+      } else if (lowerMessage.includes('メンテナンス') || lowerMessage.includes('修理')) {
+        return 'メンテナンスや修理については、全国のサービスショップで対応しております。「サービスショップ」ボタンから最寄りの店舗をご確認ください。';
+      } else if (lowerMessage.includes('価格') || lowerMessage.includes('部品')) {
+        return '部品価格表は各製品ページからダウンロードいただけます。「部品価格表」リンクをクリックしてください。';
+      } else if (lowerMessage.includes('問い合わせ') || lowerMessage.includes('電話') || lowerMessage.includes('連絡')) {
+        return 'お問い合わせはカスタマーサービス（0120-56-1456）までお電話ください。受付時間は9:30～12:00、13:00～17:00（土日祝除く）です。';
+      } else {
+        return 'ご質問ありがとうございます。より詳しいサポートが必要な場合は、カスタマーサービス（0120-56-1456）までお気軽にお問い合わせください。';
+      }
+    }
+
+    // Enterキーで送信
+    document.addEventListener('DOMContentLoaded', function () {
+      const chatInput = document.getElementById('chatbotInput');
+      if (chatInput) {
+        chatInput.addEventListener('keypress', function (e) {
+          if (e.key === 'Enter') {
+            sendMessage();
+          }
+        });
+      }
+    });
+
+    // ===== サービスショップマップ機能 =====
+    function showServiceShopMap() {
+      document.getElementById('serviceShopModal').classList.add('active');
+    }
+
+    function closeServiceShopModal() {
+      document.getElementById('serviceShopModal').classList.remove('active');
+      // 全てのショップ情報を非表示
+      document.querySelectorAll('.shop-info').forEach(info => {
+        info.classList.remove('active');
+      });
+    }
+
+    function showShopInfo(shopId) {
+      // 全てのショップ情報を非表示
+      document.querySelectorAll('.shop-info').forEach(info => {
+        info.classList.remove('active');
+      });
+
+      // 選択されたショップ情報を表示
+      const selectedShop = document.getElementById(`shop-${shopId}`);
+      if (selectedShop) {
+        selectedShop.classList.add('active');
+      }
+    }
+
+    // モーダル外クリックで閉じる
+    document.addEventListener('DOMContentLoaded', function () {
+      const serviceShopModal = document.getElementById('serviceShopModal');
+      if (serviceShopModal) {
+        serviceShopModal.addEventListener('click', function (e) {
+          if (e.target === this) {
+            closeServiceShopModal();
+          }
+        });
+      }
+    });
+
+    // ===== FAQ トグル機能 =====
+    function toggleFAQCategory(element) {
+      const faqCategory = element.parentElement;
+      const isActive = faqCategory.classList.contains('active');
+
+      if (isActive) {
+        faqCategory.classList.remove('active');
+      } else {
+        faqCategory.classList.add('active');
+      }
+    }
+
+    function toggleFAQ(element) {
+      const faqItem = element.parentElement;
+      faqItem.classList.toggle('active');
+    }
+
+    // ===== 検索機能 =====
+    function filterProducts() {
+      const selectedCategories = Array.from(document.querySelectorAll('.category-checkbox:checked')).map(cb => cb.value);
+      const keywordInput = document.getElementById('keyword').value.toLowerCase().trim();
+
+      filteredProducts = products.filter(product => {
+        let categoryMatch = false;
+        if (selectedCategories.length === 0) {
+          categoryMatch = !product.discontinued;
+        } else if (selectedCategories.includes('廃番製品')) {
+          if (selectedCategories.length === 1) {
+            categoryMatch = product.discontinued;
+          } else {
+            const otherCategories = selectedCategories.filter(c => c !== '廃番製品');
+            categoryMatch = product.discontinued || otherCategories.includes(product.category);
+          }
+        } else {
+          categoryMatch = selectedCategories.includes(product.category) && !product.discontinued;
+        }
+
+        const keywordMatch = !keywordInput ||
+          product.model.toLowerCase().includes(keywordInput) ||
+          product.name.toLowerCase().includes(keywordInput) ||
+          product.keywords.some(kw => kw.toLowerCase().includes(keywordInput));
+
+        return categoryMatch && keywordMatch;
+      });
+
+      currentPage = 1;
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      updateResultsInfo();
+      updateProductDisplay();
+      updatePagination();
+    }
+
+    function updateResultsInfo() {
+      const totalCount = filteredProducts.length;
+      const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+      document.getElementById('totalCount').textContent = totalCount;
+      document.getElementById('currentPage').textContent = currentPage;
+      document.getElementById('totalPages').textContent = totalPages || 1;
+    }
+
+    function updateProductDisplay() {
+      const grid = document.getElementById('productsGrid');
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageProducts = filteredProducts.slice(startIndex, endIndex);
+
+      if (pageProducts.length === 0) {
+        grid.innerHTML = `
+          <div class="no-results">
+            <h2>検索結果が見つかりません</h2>
+            <p>検索条件を変更してお試しください</p>
+          </div>
+        `;
+      } else {
+        grid.innerHTML = pageProducts.map(product => createProductCard(product)).join('');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function updatePagination() {
+      const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
+      const pagination = document.getElementById('pagination');
+
+      let html = '';
+
+      html += `<button class="pagination-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹ 前へ</button>`;
+
+      const maxPagesToShow = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+      let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+      if (endPage - startPage < maxPagesToShow - 1) {
+        startPage = Math.max(1, endPage - maxPagesToShow + 1);
+      }
+
+      if (startPage > 1) {
+        html += `<button class="pagination-btn" onclick="changePage(1)">1</button>`;
+        if (startPage > 2) {
+          html += `<span style="padding: 0 8px; color: #666666;">...</span>`;
+        }
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+      }
+
+      if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+          html += `<span style="padding: 0 8px; color: #666666;">...</span>`;
+        }
+        html += `<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+      }
+
+      html += `<button class="pagination-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>次へ ›</button>`;
+
+      pagination.innerHTML = html;
+    }
+
+    function changePage(page) {
+      const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE) || 1;
+      if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        updateDisplay();
+      }
+    }
+
+    function createProductCard(product) {
+      if (!productImageIndices[product.id]) {
+        productImageIndices[product.id] = 0;
+      }
+
+      const currentImageIndex = productImageIndices[product.id];
+      const hasImages = product.images.length > 0;
+      const currentImage = hasImages ? product.images[currentImageIndex] : '';
+      const hasMultipleImages = product.images.length > 1;
+
+      // 廃番製品の場合は特別な画像表示
+      let imageContent = '';
+      if (product.discontinued) {
+        imageContent = `
+          <div class="discontinued-image">
+            <div class="discontinued-image-icon">⚠️</div>
+            <div class="discontinued-image-text">この商品は廃番済みです</div>
+          </div>
+        `;
+      } else if (hasImages) {
+        imageContent = `
+          <img src="${currentImage}" alt="${product.model}" class="product-image" loading="lazy" onerror="this.style.display='none';">
+          ${hasMultipleImages ? `
+            <button class="image-nav-btn prev" onclick="changeProductImage(${product.id}, -1, event)">‹</button>
+            <button class="image-nav-btn next" onclick="changeProductImage(${product.id}, 1, event)">›</button>
+            <div class="image-indicator">
+              ${product.images.map((_, index) => `
+                <div class="indicator-dot ${index === currentImageIndex ? 'active' : ''}"></div>
+              `).join('')}
+            </div>
+          ` : ''}
+        `;
+      }
+
+      return `
+        <div class="product-card">
+          ${product.discontinued ? '<div class="discontinued-badge">廃番品</div>' : ''}
+          <div class="product-image-container">
+            ${imageContent}
+          </div>
+          
+          <div class="product-info">
+            <div class="product-model">${product.model}</div>
+            <div class="product-name">${product.name}</div>
+            <div class="product-category">${product.category}</div>
+          </div>
+
+          
+  <div class="product-links">
+  ${product.availableDocuments.slice(0, 4).map(doc => {
+        const isPDF = doc === '分解図' || doc === '製品カタログ';
+        const isForm = doc === '部品価格表' || doc === '操作説明書';
+
+        // ✅ 同じ html フォルダ内なので相対パスで良い
+        const url = isForm ? './form.html' : './index.html';
+
+        // 別タブで開かないなら target を _self に
+        return `<a href="${url}" target="_self" rel="noopener noreferrer" class="product-link">${doc}</a>`;
+      }).join('')}
+</div>
+
+
+          <button class="product-detail-btn" onclick="showProductDetail(${product.id})">
+            製品詳細を見る
+          </button>
+        </div>
+      `;
+    }
+
+    function changeProductImage(productId, direction, event) {
+      event.stopPropagation();
+      const product = products.find(p => p.id === productId);
+      if (!product || product.images.length === 0) return;
+
+      const currentIndex = productImageIndices[productId] || 0;
+      let newIndex = currentIndex + direction;
+
+      if (newIndex < 0) {
+        newIndex = product.images.length - 1;
+      } else if (newIndex >= product.images.length) {
+        newIndex = 0;
+      }
+
+      productImageIndices[productId] = newIndex;
+      updateProductDisplay();
+    }
+
+    // ===== モーダル関連 =====
+    function closeDetailModal() {
+      document.getElementById('productDetailModal').classList.remove('active');
+    }
+
+    function showProductDetail(productId) {
+      const product = products.find(p => p.id === productId);
+      const modal = document.getElementById('productDetailModal');
+      const content = document.getElementById('productDetailContent');
+
+      if (!productImageIndices[`detail-${product.id}`]) {
+        productImageIndices[`detail-${product.id}`] = 0;
+      }
+
+      const currentImageIndex = productImageIndices[`detail-${product.id}`];
+      const hasImages = product.images.length > 0;
+      const currentImage = hasImages ? product.images[currentImageIndex] : '';
+      const hasMultipleImages = product.images.length > 1;
+
+      // 廃番製品の場合は特別な画像表示
+      let detailImageContent = '';
+      if (product.discontinued) {
+        detailImageContent = `
+          <div class="discontinued-image">
+            <div class="discontinued-image-icon">⚠️</div>
+            <div class="discontinued-image-text">この商品は廃番済みです</div>
+          </div>
+        `;
+      } else if (hasImages) {
+        detailImageContent = `
+          <img src="${currentImage}" alt="${product.model}" loading="lazy" onerror="this.style.display='none';">
+          ${hasMultipleImages ? `
+            <button class="detail-image-nav prev" onclick="changeDetailImage(${product.id}, -1)">‹</button>
+            <button class="detail-image-nav next" onclick="changeDetailImage(${product.id}, 1)">›</button>
+            <div class="image-indicator">
+              ${product.images.map((_, index) => `
+                <div class="indicator-dot ${index === currentImageIndex ? 'active' : ''}"></div>
+              `).join('')}
+            </div>
+          ` : ''}
+        `;
+      }
+
+      const html = `
+        <div class="detail-header">
+          <div class="detail-image-container">
+            ${detailImageContent}
+          </div>
+          <div class="detail-info">
+            <h2>${product.model}</h2>
+            <h3>${product.name}</h3>
+            <div class="detail-badges">
+              <span class="detail-badge badge-category">${product.category}</span>
+              ${product.discontinued ? '<span class="detail-badge badge-discontinued">廃番品</span>' : ''}
+            </div>
+            <div class="detail-keywords">
+              ${product.keywords.map(keyword => `<span class="keyword-tag">${keyword}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h4>製品仕様</h4>
+          <div class="specs-grid">
+            ${Object.entries(product.specs).map(([key, value]) => `
+              <div class="spec-item">
+                <div class="spec-label">${key}</div>
+                <div class="spec-value">${value}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h4>利用可能なドキュメント</h4>
+          <div class="detail-actions">
+            ${product.availableDocuments.map(doc => {
+        const isPDF = doc === '分解図' || doc === '製品カタログ';
+        const isForm = doc === '部品価格表' || doc === '操作説明書';
+        const url = isPDF ? 'http://127.0.0.1:5500/index.html' : 'http://127.0.0.1:5500/form.html';
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="detail-action-btn">${doc}</a>`;
+      }).join('')}
+          </div>
+        </div>
+      `;
+
+      content.innerHTML = html;
+      modal.classList.add('active');
+    }
+
+    function changeDetailImage(productId, direction) {
+      const product = products.find(p => p.id === productId);
+      if (!product || product.images.length === 0) return;
+
+      const detailKey = `detail-${productId}`;
+      const currentIndex = productImageIndices[detailKey] || 0;
+      let newIndex = currentIndex + direction;
+
+      if (newIndex < 0) {
+        newIndex = product.images.length - 1;
+      } else if (newIndex >= product.images.length) {
+        newIndex = 0;
+      }
+
+      productImageIndices[detailKey] = newIndex;
+      showProductDetail(productId);
+    }
+
+    // ===== イベントリスナー =====
+    document.addEventListener('DOMContentLoaded', function () {
+      filterProducts();
+
+      document.getElementById('searchForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        filterProducts();
+      });
+
+      document.querySelectorAll('.category-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', filterProducts);
+      });
+
+      const productDetailModal = document.getElementById('productDetailModal');
+      if (productDetailModal) {
+        productDetailModal.addEventListener('click', function (e) {
+          if (e.target === this) closeDetailModal();
+        });
+      }
+    });
+
+    // Element SDK初期化
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig: {
+          page_title: 'ダウンロードセンター',
+          header_button_text: '日本ワグナースプレーテック株式会社Webサイトのトップページへ'
+        },
+        onConfigChange: async (config) => {
+          document.getElementById('pageTitle').textContent = config.page_title || 'ダウンロードセンター';
+          document.getElementById('newProductsLabel').textContent = config.header_button_text || '日本ワグナースプレーテック株式会社Webサイトのトップページへ';
+        },
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['page_title', config.page_title || 'ダウンロードセンター'],
+          ['header_button_text', config.header_button_text || '日本ワグナースプレーテック株式会社Webサイトのトップページへ']
+        ])
+      });
+    }
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9c4cc46912a6d1c2',t:'MTc2OTU2NDI3NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
