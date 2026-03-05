@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>会社News｜日本ワグナー・スプレーテック</title>
+  <meta name="description" content="日本ワグナー・スプレーテックからのお知らせ、プレスリリース、イベント、メンテナンス情報などの最新ニュースを掲載しています。">
+
+  <!-- ====== Base Style ====== -->
+  <style>
+    :root{
+      --brand:#FFCB00;
+      --brand-dark:#f59e0b;
+      --ink:#111827;
+      --muted:#4b5563;
+      --line:#e5e7eb;
+      --panel:#ffffff;
+      --bg:#f8f9fa;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'メイリオ', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color:var(--ink); background:var(--bg); line-height:1.6;
+    }
+    a{color:inherit}
+
+    /* ====== Header / Hero ====== */
+    header{
+      background:#2b2b2b; color:#fff;
+      box-shadow:0 2px 8px rgba(0,0,0,.25);
+    }
+    .header-inner{
+      max-width:1200px; margin:0 auto; padding:16px 20px;
+      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    }
+    .logo{
+      display:flex; align-items:center; gap:12px; color:#fff; text-decoration:none; font-weight:800;
+    }
+    .logo-mark{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:44px;height:44px; border-radius:8px; background:var(--brand); color:#2b2b2b; font-weight:900;
+    }
+    .cta{
+      text-decoration:none; font-weight:700; background:var(--brand); color:#2b2b2b;
+      padding:10px 16px; border-radius:10px; box-shadow:0 4px 12px rgba(255,203,0,.35); transition:.2s;
+    }
+    .cta:hover{transform:translateY(-2px); background:#e6b800}
+
+    .hero{
+      background:linear-gradient(145deg,#ffffff 0%,#f8fafc 100%);
+      border-bottom:1px solid rgba(0,0,0,.04);
+    }
+    .hero-inner{
+      max-width:1200px; margin:0 auto; padding:36px 20px 8px 20px;
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    }
+    .hero-title{margin:0; font-size:32px; font-weight:900; color:#2b2b2b;}
+    .hero-sub{margin:6px 0 18px; color:#6b7280;}
+
+    /* ====== News Section ====== */
+    .container{max-width:1200px; margin:0 auto; padding:24px 20px 40px;}
+    .news-wrap{
+      background:var(--panel); border:1px solid rgba(255,255,255,.6); border-radius:22px;
+      box-shadow:0 20px 60px rgba(0,0,0,.08); padding:28px; position:relative; overflow:hidden;
+    }
+    .news-wrap::before{
+      content:''; position:absolute; inset:0 0 auto 0; height:6px;
+      background:linear-gradient(90deg,var(--brand),var(--brand-dark),var(--brand));
+    }
+
+    .news-header{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px;
+    }
+    .news-header h2{
+      margin:0; font-size:22px; font-weight:900; color:#2b2b2b; border-bottom:3px solid var(--brand); padding-bottom:8px;
+    }
+    .view-toggle{display:inline-flex; gap:8px; background:#fff; border:2px solid var(--line); border-radius:12px; padding:4px;}
+    .view-btn{border:none; background:transparent; padding:10px 14px; border-radius:8px; font-weight:800; cursor:pointer; color:#374151;}
+    .view-btn.active{background:var(--brand); color:#1f2937;}
+
+    .filters{display:grid; grid-template-columns:1fr; gap:12px; margin:10px 0 18px;}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{
+      background:#fff; border:2px solid var(--line); color:#374151;
+      padding:8px 14px; border-radius:999px; font-size:13px; font-weight:800; cursor:pointer; transition:.15s;
+    }
+    .chip:hover{border-color:var(--brand); transform:translateY(-1px)}
+    .chip.active{background:var(--brand); border-color:var(--brand); color:#1f2937}
+
+    .filter-row{display:grid; grid-template-columns:200px 1fr 130px; gap:10px}
+    .filter-row select, .filter-row input{
+      padding:12px 14px; border:2px solid var(--line); border-radius:10px; font-size:15px; transition:.15s;
+      font-family:inherit;
+    }
+    .filter-row select:focus, .filter-row input:focus{outline:none; border-color:#667eea; box-shadow:0 0 0 3px rgba(102,126,234,.12)}
+    .btn-search{
+      border:none; background:linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%); color:#1f2937;
+      border-radius:10px; font-weight:900; cursor:pointer; transition:.2s;
+    }
+    .btn-search:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(255,203,0,.35)}
+
+    .news-list.grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px}
+    .card{
+      background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px; position:relative;
+      box-shadow:0 8px 24px rgba(0,0,0,.06); transition:.2s;
+    }
+    .card::before{
+      content:''; position:absolute; inset:0 0 auto 0; height:4px;
+      background:linear-gradient(90deg,var(--brand),var(--brand-dark),var(--brand));
+    }
+    .card:hover{transform:translateY(-6px); box-shadow:0 16px 40px rgba(0,0,0,.12); border-color:rgba(255,203,0,.4)}
+    .top-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+    .date{font-size:12px; color:#6b7280; font-weight:800}
+    .badge{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:900; padding:4px 10px; border-radius:999px}
+    .badge.お知らせ{background:#eef2ff; color:#3730a3}
+    .badge.プレスリリース{background:#ecfeff; color:#155e75}
+    .badge.メンテナンス{background:#fef3c7; color:#92400e}
+    .badge.採用{background:#e0f2fe; color:#075985}
+    .badge.イベント{background:#fce7f3; color:#9f1239}
+    .badge.pin{background:#fff7ed; color:#b45309; border:1px solid #fdba74}
+    .badge.new{background:#dcfce7; color:#065f46; border:1px solid #86efac}
+    .title{margin:6px 0 4px; font-weight:900; font-size:18px; color:#111827}
+    .summary{color:var(--muted); font-size:14px}
+    .actions{margin-top:8px; display:flex; gap:8px; flex-wrap:wrap}
+    .linkbtn{
+      text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:6px;
+      padding:9px 12px; border-radius:10px; font-weight:800; font-size:13px;
+      border:2px solid var(--line); background:linear-gradient(135deg,#f8fafc 0%, #f1f5f9 100%); color:#374151; transition:.15s;
+    }
+    .linkbtn:hover{border-color:var(--brand); background:linear-gradient(135deg,var(--brand) 0%, var(--brand-dark) 100%); color:#1f2937}
+
+    /* Timeline */
+    .news-list.timeline{position:relative; padding-left:24px}
+    .news-list.timeline::before{content:''; position:absolute; left:12px; top:0; bottom:0; width:2px; background:linear-gradient(#e5e7eb, var(--brand-dark))}
+    .tl-item{position:relative; margin-bottom:18px}
+    .tl-dot{position:absolute; left:-1px; top:8px; width:10px; height:10px; border-radius:50%; background:var(--brand); border:2px solid #fff; box-shadow:0 2px 8px rgba(0,0,0,.2)}
+    .tl-card{margin-left:20px}
+
+    .nores{
+      text-align:center; padding:40px 12px; background:#fff; border-radius:14px; border:1px solid var(--line);
+      color:#6b7280;
+    }
+
+    /* Pagination */
+    .pager{display:flex; justify-content:center; align-items:center; gap:8px; margin-top:18px; flex-wrap:wrap}
+    .pagebtn{
+      padding:8px 12px; background:#fff; border:2px solid var(--line); border-radius:10px; font-weight:800; cursor:pointer; color:#374151; min-width:40px;
+    }
+    .pagebtn:hover{background:var(--brand); border-color:var(--brand); color:#1f2937; transform:translateY(-2px)}
+    .pagebtn.active{background:var(--brand); border-color:var(--brand); color:#1f2937}
+
+    /* Footer */
+    footer{color:#9ca3af; text-align:center; padding:28px 16px}
+
+    /* Responsive */
+    @media (max-width: 1200px){
+      .news-list.grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width: 768px){
+      .hero-inner{padding:28px 16px 4px}
+      .hero-title{font-size:24px}
+      .news-wrap{padding:20px}
+      .filter-row{grid-template-columns:1fr}
+      .news-list.grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== Header ====== -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="日本ワグナー・スプレーテック">
+        <span class="logo-mark">W</span>
+        <span>日本ワグナー・スプレーテック</span>
+      </a>
+      <a class="cta" href="https://www.jp-wagner.com/" target="_blank" rel="noopener noreferrer">🏠 公式サイトへ</a>
+    </div>
+  </header>
+
+  <!-- ====== Hero ====== -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1 class="hero-title">📰 会社News</h1>
+        <p class="hero-sub">お知らせ・プレスリリース・イベント・メンテナンス情報など、最新トピックをお届けします。</p>
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; color:#6b7280;">表示切替：</span>
+        <div class="view-toggle">
+          <button class="view-btn active" id="viewCardBtn" data-view="grid">カード</button>
+          <button class="view-btn" id="viewTimelineBtn" data-view="timeline">タイムライン</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== News ====== -->
+  <main class="container">
+    <section class="news-wrap" aria-label="ニュース一覧">
+      <div class="news-header">
+        <h2>最新ニュース</h2>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters">
+        <div class="chips" id="chips"></div>
+        <div class="filter-row">
+          <select id="yearSelect" aria-label="年で絞り込み"></select>
+          <input type="text" id="keywordInput" placeholder="キーワード（タイトル・本文）" aria-label="キーワードで絞り込み">
+          <button class="btn-search" id="btnSearch">検索</button>
+        </div>
+      </div>
+
+      <!-- List -->
+      <div id="newsList" class="news-list grid"></div>
+
+      <!-- Pagination -->
+      <div id="newsPager" class="pager"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>© 2026 J. Wagner GmbH / Japan Wagner Spraytech. All rights reserved.</small>
+  </footer>
+
+  <!-- ====== News Detail Modal ====== -->
+  <div id="newsModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:50; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#fff; border-radius:16px; max-width:800px; width:100%; max-height:90vh; overflow:auto; position:relative; padding:28px;">
+      <button id="newsModalClose" title="閉じる" style="position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%; border:none; cursor:pointer; background:#ef4444; color:#fff; font-size:18px;">×</button>
+      <div id="newsModalBody"></div>
+    </div>
+  </div>
+
+  <!-- ====== Script ====== -->
+  <script>
+    /* =============================
+      設定・データ
+    ============================= */
+    const CATEGORIES = ['全て','お知らせ','プレスリリース','メンテナンス','採用','イベント'];
+    const PER_PAGE = 6;
+    const TODAY = new Date();
+
+    // 運用：ここにニュースを追記してください
+    const NEWS = [
+      { id:1, date:'2026-03-01', category:'お知らせ', title:'ニュースLPを公開しました', summary:'会社Newsを単独ページとして公開しました。', body:'<p>本ページではカテゴリ・年度・キーワードでの絞り込み、カード/タイムライン切替、NEW判定、ピン留めなどの機能をご利用いただけます。</p>', link:'https://www.jp-wagner.com/', pin:true },
+      { id:2, date:'2026-02-20', category:'プレスリリース', title:'新型エアレス塗装機「SF31 Supreme」出荷開始', summary:'最大吐出量3.1L/分・25MPaに対応。', body:'<p>耐久性と保守性を強化し、長時間稼働でも安定したスプレーパターンを提供します。</p>', link:'#' },
+      { id:3, date:'2026-02-15', category:'メンテナンス', title:'一部ドキュメントのメンテナンス作業について', summary:'2/25(日) 00:00-06:00 の間に遅延が発生する可能性があります。', body:'<p>ご不便をおかけしますが、ご理解のほどお願いいたします。</p>' },
+      { id:4, date:'2026-02-10', category:'イベント', title:'塗装ソリューションセミナー（大阪）開催', summary:'最新の粉体・液体塗装ソリューションをご紹介。', body:'<p>会期：3/18(火) 13:00-16:00（参加無料・事前登録制）<br>会場：弊社ショールーム（大東市）</p>', link:'#' },
+      { id:5, date:'2026-01-30', category:'採用', title:'カスタマーサポート職の中途採用開始', summary:'技術サポート・ドキュメント整備を担う募集です。', body:'<p>応募要件や待遇は採用ページをご覧ください。</p>', link:'#' },
+      { id:6, date:'2025-12-20', category:'プレスリリース', title:'粉体塗装機「GM7000」アップデート', summary:'塗着効率とメンテ性を向上。', body:'<p>対象シリアルや手順は技術資料をご確認ください。</p>', link:'#' },
+      { id:7, date:'2025-11-15', category:'お知らせ', title:'年末年始の出荷スケジュール', summary:'12/28～1/5は休業となります。', body:'<p>詳細はカスタマーサービスまでお問い合わせください。</p>' },
+      { id:8, date:'2025-10-01', category:'イベント', title:'展示会出展のご報告', summary:'ご来場ありがとうございました。', body:'<p>当日のデモ資料は後日掲載予定です。</p>' }
+    ];
+
+    const state = { view:'grid', category:'全て', year:'全て', keyword:'', page:1 };
+
+    /* =============================
+      ユーティリティ
+    ============================= */
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+    const parseDate = (s) => { const [y,m,d] = s.split('-').map(n=>parseInt(n,10)); return new Date(y, m-1, d); };
+    const isNew = (s) => ((TODAY - parseDate(s)) / 86400000) <= 14;
+    const ymd = (s) => { const d=parseDate(s); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`; };
+
+    /* =============================
+      初期化
+    ============================= */
+    function initFilters(){
+      // カテゴリ chips
+      const chips = $('#chips');
+      chips.innerHTML = CATEGORIES.map(c => `<button class="chip${c==='全て'?' active':''}" data-cat="${c}">${c}</button>`).join('');
+      $$('#chips .chip').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          $$('#chips .chip').forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          state.category = btn.dataset.cat;
+          state.page = 1;
+          render();
+        });
+      });
+
+      // 年セレクト（NEWSから抽出）
+      const years = Array.from(new Set(NEWS.map(n=>parseDate(n.date).getFullYear()))).sort((a,b)=>b-a);
+      const yearSel = $('#yearSelect');
+      yearSel.innerHTML = `<option value="全て">全ての年</option>` + years.map(y=>`<option value="${y}">${y}年</option>`).join('');
+      yearSel.addEventListener('change', ()=>{ state.year = yearSel.value; state.page=1; render(); });
+
+      // キーワード
+      $('#btnSearch').addEventListener('click', ()=>{
+        state.keyword = $('#keywordInput').value.trim().toLowerCase();
+        state.page = 1;
+        render();
+      });
+
+      // View toggle
+      $('#viewCardBtn').addEventListener('click', ()=>{
+        state.view='grid';
+        $('#viewCardBtn').classList.add('active');
+        $('#viewTimelineBtn').classList.remove('active');
+        render();
+      });
+      $('#viewTimelineBtn').addEventListener('click', ()=>{
+        state.view='timeline';
+        $('#viewTimelineBtn').classList.add('active');
+        $('#viewCardBtn').classList.remove('active');
+        render();
+      });
+    }
+
+    /* =============================
+      データ絞り込み
+    ============================= */
+    function filteredNews(){
+      let arr = [...NEWS];
+      // ピン留め優先 + 日付降順
+      arr.sort((a,b)=> (b.pin?1:0)-(a.pin?1:0) || (parseDate(b.date)-parseDate(a.date)));
+
+      if(state.category !== '全て'){
+        arr = arr.filter(n => n.category === state.category);
+      }
+      if(state.year !== '全て'){
+        arr = arr.filter(n => String(parseDate(n.date).getFullYear()) === String(state.year));
+      }
+      if(state.keyword){
+        arr = arr.filter(n =>
+          (n.title && n.title.toLowerCase().includes(state.keyword)) ||
+          (n.summary && n.summary.toLowerCase().includes(state.keyword)) ||
+          (n.body && n.body.toLowerCase().includes(state.keyword))
+        );
+      }
+      return arr;
+    }
+
+    /* =============================
+      描画
+    ============================= */
+    function render(){
+      const listEl = $('#newsList');
+      const pagerEl = $('#newsPager');
+      const items = filteredNews();
+      const totalPages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+      if(state.page > totalPages) state.page = totalPages;
+
+      const start = (state.page - 1) * PER_PAGE;
+      const pageItems = items.slice(start, start + PER_PAGE);
+
+      if(state.view === 'grid'){
+        listEl.classList.remove('timeline'); listEl.classList.add('grid');
+        listEl.innerHTML = pageItems.map(renderCard).join('') || `<div class="nores">ニュースが見つかりません。条件を変更してお試しください。</div>`;
+      }else{
+        listEl.classList.remove('grid'); listEl.classList.add('timeline');
+        listEl.innerHTML = pageItems.map(renderTimeline).join('') || `<div class="nores">ニュースが見つかりません。条件を変更してお試しください。</div>`;
+      }
+
+      // ページネーション
+      let html = '';
+      html += `<button class="pagebtn" ${state.page===1?'disabled':''} onclick="goPage(${state.page-1})">‹ 前へ</button>`;
+      const maxShow = 5;
+      let s = Math.max(1, state.page - Math.floor(maxShow/2));
+      let e = Math.min(totalPages, s + maxShow - 1);
+      if(e - s < maxShow - 1){ s = Math.max(1, e - maxShow + 1); }
+      if(s > 1){ html += `<button class="pagebtn" onclick="goPage(1)">1</button>`; if(s > 2) html += `<span style="color:#6b7280;padding:0 6px;">…</span>`; }
+      for(let i=s;i<=e;i++){ html += `<button class="pagebtn ${i===state.page?'active':''}" onclick="goPage(${i})">${i}</button>`; }
+      if(e < totalPages){ if(e < totalPages - 1) html += `<span style="color:#6b7280;padding:0 6px;">…</span>`; html += `<button class="pagebtn" onclick="goPage(${totalPages})">${totalPages}</button>`; }
+      html += `<button class="pagebtn" ${state.page===totalPages?'disabled':''} onclick="goPage(${state.page+1})">次へ ›</button>`;
+      pagerEl.innerHTML = html;
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+    window.goPage = function(p){ const total = Math.max(1, Math.ceil(filteredNews().length/PER_PAGE)); if(p>=1 && p<=total){ state.page = p; render(); } };
+
+    function renderCard(n){
+      return `
+        <article class="card" aria-labelledby="t-${n.id}">
+          <div class="top-row">
+            <span class="date">${ymd(n.date)}</span>
+            <span class="badge ${n.category}">${n.category}</span>
+            ${n.pin ? `<span class="badge pin">📌 ピン留め</span>` : ``}
+            ${isNew(n.date) ? `<span class="badge new">🆕 NEW</span>` : ``}
+          </div>
+          <h3 class="title" id="t-${n.id}">${n.title}</h3>
+          <p class="summary">${n.summary || ''}</p>
+          <div class="actions">
+            <a href="javascript:void(0)" class="linkbtn" onclick="openDetail(${n.id})">詳しく見る</a>
+            ${n.link ? `<a href="${n.link}" class="linkbtn" target="_blank" rel="noopener">外部リンク ↗</a>` : ``}
+          </div>
+        </article>
+      `;
+    }
+    function renderTimeline(n){
+      return `
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            ${renderCard(n)}
+          </div>
+        </div>
+      `;
+    }
+
+    /* =============================
+      詳細モーダル
+    ============================= */
+    window.openDetail = function(id){
+      const n = NEWS.find(x=>x.id===id);
+      if(!n) return;
+      const body = $('#newsModalBody');
+      body.innerHTML = `
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px;">
+          <span class="date">${ymd(n.date)}</span>
+          <span class="badge ${n.category}">${n.category}</span>
+          ${n.pin ? `<span class="badge pin">📌 ピン留め</span>` : ``}
+          ${isNew(n.date) ? `<span class="badge new">🆕 NEW</span>` : ``}
+        </div>
+        <h2 style="margin:0 0 8px; font-size:22px; font-weight:900; color:#111827;">${n.title}</h2>
+        <div style="color:#374151; line-height:1.9; font-size:15px;">${n.body || ''}</div>
+        ${n.link ? `<div style="margin-top:14px;"><a class="linkbtn" href="${n.link}" target="_blank" rel="noopener">外部リンクで詳しく ↗</a></div>` : ``}
+      `;
+      $('#newsModal').style.display = 'flex';
+    };
+
+    function closeModal(){ $('#newsModal').style.display='none'; }
+    $('#newsModalClose').addEventListener('click', closeModal);
+    $('#newsModal').addEventListener('click', (e)=>{ if(e.target.id==='newsModal') closeModal(); });
+
+    /* =============================
+      起動
+    ============================= */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      initFilters();
+      render();
+    });
+  </script>
+</body>
+</html>
